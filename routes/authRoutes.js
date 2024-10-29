@@ -2,8 +2,6 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const {db,auth} = require('../config/firebaseAdmin');
-const {sendOtp}=require('../services/otpService')
-let otpStorage = {};
 router.get("/login", (req, res) => {
     res.render("login"); 
   });
@@ -51,42 +49,6 @@ router.post('/login',async (req,res)=>{
         console.log(err);
     }
 })
-
-router.post('/forgot-password', async (req, res) => {
-    const { email } = req.body; 
-
-    try {
-        const userSnapshot = await db.collection('users').where('email', '==', email).get(); 
-
-        if (userSnapshot.empty) {
-            return res.status(400).send('User not found'); 
-        }
-
-        const otp = await sendOtp(email); 
-        otpStorage[email] = otp; 
-        res.send('OTP sent to your email'); 
-    } catch (error) {
-        console.error('Error requesting OTP:', error);
-        res.status(500).send('Error sending OTP'); 
-    }
-});
-
-router.patch('/reset-password', async (req, res) => {
-    const { email, otp, newPassword } = req.body; 
-    if (otpStorage[email] !== otp) {
-        return res.status(400).send('Invalid OTP'); 
-    }
-
-    try {
-        const hashedPassword = await bcrypt.hash(newPassword, 10); 
-        await db.collection('users').doc(email).update({ password: hashedPassword }); 
-        delete otpStorage[email]; 
-        res.send('Password reset successfully'); 
-    } catch (error) {
-        console.error('Error resetting password:', error);
-        res.status(500).send('Error resetting password'); 
-    }
-});
 
 router.get('/forgot-password', (req, res) => {
     res.render('forgotPassword'); 
