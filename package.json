@@ -7,6 +7,7 @@
     "express-session": "^1.18.1",
     "firebase": "^11.0.1",
     "firebase-admin": "^12.7.0",
+    "git-filter-repo": "^0.0.30",
     "node": "^23.1.0",
     "nodemailer": "^6.9.16",
     "nodemon": "^3.1.7",
