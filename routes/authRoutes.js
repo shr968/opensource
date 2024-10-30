@@ -1,84 +1,90 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
+const { db, auth: adminAuth } = require('../config/firebaseAdmin');
+const { auth, sendPasswordResetEmail } = require('../config/firebase'); 
+const { signInWithEmailAndPassword } = require("firebase/auth");
 const bcrypt = require('bcrypt');
-const {db,auth} = require('../config/firebaseAdmin');
 router.get("/login", (req, res) => {
-    res.render("login"); 
-  });
-
-router.get("/register",(req,res)=>{
-    res.render("register")
+    res.render("login");
 });
-router.post('/register',async (req,res)=>{
-    const {email,password}=req.body;
-    try{
-        const userSnapshot = await db.collection('users').where('email',"==",email).get();
-        if(!userSnapshot.empty)
-            res.send('User already exists')
-        const hashedPassword = await bcrypt.hash(password,10);
-        const userRecord = await auth.createUser({
+router.post('/login', async (req, res) => {
+    const { email, password } = req.body;
+    try {
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        if (userCredential) {
+            res.redirect('/dashboard');
+        }
+    } catch (error) {
+        console.error("Error logging in:", error);
+        res.status(401).send('Invalid credentials');
+    }
+});
+router.get("/register", (req, res) => {
+    res.render("register");
+});
+router.post('/register', async (req, res) => {
+    const { email, password } = req.body;
+    if (!password || password.length < 6) {
+        return res.status(400).send("Password must be at least 6 characters long.");
+    }
+
+    try {
+        const userSnapshot = await db.collection('users').where('email', "==", email).get();
+        if (!userSnapshot.empty) 
+            return res.send('User already exists');
+        const userRecord = await adminAuth.createUser({
             email,
-            password:hashedPassword
-        })
+            password 
+        });
+        const hashedPassword = await bcrypt.hash(password, 10);
         await db.collection('users').doc(userRecord.uid).set({
             email,
-            password:hashedPassword
+            hashedPassword 
         });
+
         res.redirect('/login');
     } catch (error) {
         console.error("Error creating new user:", error);
         res.status(500).send("Error registering user");
     }
-})
-router.post('/login',async (req,res)=>{
-    const {email, password}=req.body;
-    try{
-        const userSnapshot = await db.collection('users').where('email',"==",email).get();
-        if(userSnapshot.empty)
-            return res.status(400).send('User not found');
-        const userDoc = userSnapshot.docs[0];
-        const userData = userDoc.data();
-        const hashedPassword = userData.password;
-        const match = await bcrypt.compare(password, hashedPassword);
-        if (match) {
-            res.redirect('/dashboard');
-        } else {
-            res.status(401).send('Invalid credentials'); 
-        }
-    }catch(err){
-        console.log(err);
-    }
-})
-
+});
 router.get('/forgot-password', (req, res) => {
-    res.render('forgotPassword'); 
+    res.render('forgotPassword');
 });
-
-router.get('/reset-password', (req, res) => {
-    res.render('resetPassword'); 
+router.post('/forgot-password', async (req, res) => {
+    const { email } = req.body;
+    try {
+        const userRecord = await adminAuth.getUserByEmail(email);
+        if (!userRecord) {
+            return res.status(404).send('User not found.');
+        }
+        await sendPasswordResetEmail(auth, email);
+        res.send('Reset password email sent. Please check your inbox.');
+    } catch (error) {
+        console.error("Error sending password reset email:", error);
+        res.status(500).send("Error sending reset email");
+    }
 });
-router.get('/dashboard',(req,res)=>{
-    res.render('dashboard');
-})
 router.get('/upload',(req,res)=>{
-    res.render('upload')
+    res.render('upload');
 })
-router.post('/upload',async (req,res)=>{
-    const {projectName, projectDescription, githubLink} = req.body;
-    try{
+router.post('/upload', async (req, res) => {
+    const { projectName, projectDescription, githubLink } = req.body;
+    try {
         const response = await db.collection('projects').add({
             projectName,
             projectDescription,
             githubLink,
             createdAt: new Date()
         });
-        if(response)
-            res.redirect('/projects')
-        else
-            res.send('Error saving your project')
-    }catch(err){
+        if (response) res.redirect('/projects');
+        else res.send('Error saving your project');
+    } catch (err) {
         console.log(err);
     }
+});
+router.get('/dashboard',(req,res)=>{
+    res.render('dashboard')
 })
 router.get('/projects', async (req, res) => {
     try {
@@ -91,4 +97,4 @@ router.get('/projects', async (req, res) => {
     }
 });
 
-  module.exports = router;
+module.exports = router;

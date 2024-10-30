@@ -1,7 +1,5 @@
-const firebase = require("firebase/app");
-require("firebase/analytics");
-
-
+const { initializeApp } = require("firebase/app");
+const { getAuth, sendPasswordResetEmail } = require("firebase/auth");
 const firebaseConfig = {
   apiKey: "AIzaSyCVU661S38ZOW536VVX-a_TcNRfa_YtAHM",
   authDomain: "opensourceuvce-fee8c.firebaseapp.com",
@@ -11,10 +9,7 @@ const firebaseConfig = {
   appId: "1:263262308670:web:a9d5296b3b442af62bc46f",
   measurementId: "G-W9FQ1KX1WT"
 };
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app); 
 
-
-const app = firebase.initializeApp(firebaseConfig);
-const analytics = firebase.analytics(app);
-
-
-module.exports = app;
+module.exports = { auth, sendPasswordResetEmail };
