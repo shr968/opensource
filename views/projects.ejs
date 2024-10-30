@@ -3,68 +3,138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projects</title>
+    <title>Our Projects</title>
     <style>
         body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
+            background-color: #f7f7f7;
             font-family: Arial, sans-serif;
-            background-color: #f0f8ff;
+            color: #333;
             margin: 0;
             padding: 20px;
         }
 
-        .projects-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: center;
-            max-width: 1200px;
-        }
-
-        .project-card {
-            width: 300px;
-            padding: 20px;
-            background-color: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        h1 {
             text-align: center;
-        }
-
-        .project-card h3 {
-            color: #007bff;
-            margin-bottom: 10px;
-        }
-
-        .project-card p {
-            color: #333;
-            margin-bottom: 15px;
-        }
-
-        .project-card a {
-            text-decoration: none;
-            color: #007bff;
-            font-weight: bold;
-            transition: color 0.3s;
-        }
-
-        .project-card a:hover {
+            margin-bottom: 40px;
             color: #0056b3;
+        }
+
+        .ag-format-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .ag-courses_box {
+            display: flex;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 30px; 
+        }
+
+        .ag-courses_item {
+            flex: 1 1 calc(33.333% - 20px); 
+            height: 300px; 
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); 
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease; 
+            overflow: hidden;
+            position: relative;
+            text-align: center; 
+        }
+
+        .ag-courses_item:hover {
+            transform: translateY(-5px); 
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3); 
+            background-color: #0056b3; 
+            color: white; 
+        }
+
+        .ag-courses-item_link {
+            display: block;
+            padding: 20px;
+            text-decoration: none;
+            color: inherit; 
+        }
+
+        .ag-courses-item_title {
+            font-size: 24px;
+            margin: 0 0 10px;
+            font-weight: bold;
+            transition: color 0.3s ease; 
+        }
+
+        .ag-courses-item_date-box {
+            font-size: 16px;
+            color: #666;
+            transition: color 0.3s ease; 
+        }
+
+        .ag-courses_item:hover .ag-courses-item_date-box {
+            color: white; 
+        }
+
+        .ag-courses-item_bg {
+            height: 128px;
+            width: 128px;
+            background-color: #0056b3;
+            border-radius: 50%;
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            transition: transform 0.5s ease;
+            z-index: 0;
+        }
+
+        @media only screen and (max-width: 979px) {
+            .ag-courses_item {
+                flex: 1 1 calc(50% - 20px); 
+            }
+        }
+
+        @media only screen and (max-width: 767px) {
+            .ag-format-container {
+                width: 100%;
+                padding: 0 10px;
+            }
+        }
+
+        @media only screen and (max-width: 639px) {
+            .ag-courses_item {
+                flex: 1 1 100%; 
+            }
+            .ag-courses-item_title {
+                font-size: 20px;
+            }
+            .ag-courses-item_date-box {
+                font-size: 14px;
+            }
         }
     </style>
 </head>
 <body>
     <h1>Our Projects</h1>
-    <div class="projects-container">
-        <% projects.forEach(project => { %>
-            <div class="project-card">
-                <h3><%= project.projectName %></h3>
-                <p><%= project.projectDescription %></p>
-                <a href="<%= project.githubLink %>" target="_blank">View on GitHub</a>
+    <div class="ag-format-container">
+        <% if (projects.length > 0) { %> 
+                <div class="ag-courses_box"> 
+                <% projects.forEach(project => { %>
+                    <div class="ag-courses_item">
+                        <a href="<%= project.githubLink %>" class="ag-courses-item_link" target="_blank">
+                            <div class="ag-courses-item_bg"></div>
+                            <div class="ag-courses-item_title">
+                                <%= project.projectName %>
+                            </div>
+                            <div class="ag-courses-item_date-box">
+                                <p><%= project.projectDescription %></p>
+                            </div>
+                        </a>
+                    </div>
+                <% }) %>
             </div>
-        <% }) %>
+        <% } else { %>
+            <p style="text-align:center; width:100%;">No projects available at the moment.</p> 
+        <% } %>
     </div>
 </body>
 </html>
