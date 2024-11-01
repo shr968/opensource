@@ -87,6 +87,24 @@
             z-index: 0;
         }
 
+        .back-button {
+            display: block;
+            width: 150px;
+            margin: 40px auto 0;
+            padding: 10px 20px;
+            background-color: #0056b3;
+            color: white;
+            text-align: center;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-button:hover {
+            background-color: #004494;
+        }
+
         @media only screen and (max-width: 979px) {
             .ag-courses_item {
                 flex: 1 1 calc(50% - 20px); 
@@ -117,7 +135,7 @@
     <h1>Our Projects</h1>
     <div class="ag-format-container">
         <% if (projects.length > 0) { %> 
-                <div class="ag-courses_box"> 
+            <div class="ag-courses_box"> 
                 <% projects.forEach(project => { %>
                     <div class="ag-courses_item">
                         <a href="<%= project.githubLink %>" class="ag-courses-item_link" target="_blank">
@@ -136,5 +154,8 @@
             <p style="text-align:center; width:100%;">No projects available at the moment.</p> 
         <% } %>
     </div>
+
+    <a href="/logout" class="back-button">Back to Home</a> 
+
 </body>
 </html>

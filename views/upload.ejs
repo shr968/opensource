@@ -66,10 +66,20 @@
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s ease;
+            margin-top: 10px; 
         }
 
         button:hover {
             background-color: #0056b3; 
+        }
+
+        .back-button {
+            margin-top: 15px; 
+            background-color: #6c757d; 
+        }
+
+        .back-button:hover {
+            background-color: #5a6268;
         }
     </style>
 </head>
@@ -88,6 +98,7 @@
 
             <button type="submit">Upload Project</button>
         </form>
+        <a href="/logout"><button class="back-button">Back to Home</button></a> 
     </div>
 </body>
 </html>

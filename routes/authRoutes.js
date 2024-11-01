@@ -4,6 +4,21 @@ const { db, auth: adminAuth } = require('../config/firebaseAdmin');
 const { auth, sendPasswordResetEmail } = require('../config/firebase'); 
 const { signInWithEmailAndPassword } = require("firebase/auth");
 const bcrypt = require('bcrypt');
+const session = require('express-session');
+require('dotenv').config();
+router.use(session({
+    secret: process.env.SESSION_SECRET,  
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false }  
+}));
+function isAuthenticated(req, res, next) {
+    if (req.session && req.session.user) {  
+        return next();  
+    } else {
+        res.redirect('/login');  
+    }
+}
 router.get("/login", (req, res) => {
     res.render("login");
 });
@@ -12,7 +27,14 @@ router.post('/login', async (req, res) => {
     try {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         if (userCredential) {
-            res.redirect('/dashboard');
+            req.session.user = { email }; 
+            req.session.save(err => {    
+                if (err) {
+                    console.error("Error saving session:", err);
+                    return res.status(500).send("Error logging in");
+                }
+                res.redirect('/dashboard');
+            });
         }
     } catch (error) {
         console.error("Error logging in:", error);
@@ -65,7 +87,7 @@ router.post('/forgot-password', async (req, res) => {
         res.status(500).send("Error sending reset email");
     }
 });
-router.get('/upload',(req,res)=>{
+router.get('/upload', isAuthenticated, (req,res)=>{
     res.render('upload');
 })
 router.post('/upload', async (req, res) => {
@@ -83,10 +105,10 @@ router.post('/upload', async (req, res) => {
         console.log(err);
     }
 });
-router.get('/dashboard',(req,res)=>{
+router.get('/dashboard', isAuthenticated, (req,res)=>{
     res.render('dashboard')
 })
-router.get('/projects', async (req, res) => {
+router.get('/projects', isAuthenticated, async (req, res) => {
     try {
         const projectsSnapshot = await db.collection('projects').get();
         const projects = projectsSnapshot.docs.map(doc => doc.data());
@@ -95,6 +117,17 @@ router.get('/projects', async (req, res) => {
         console.error("Error fetching projects: ", error);
         res.status(500).send("Error retrieving projects");
     }
+});
+router.get('/logout', (req, res) => {
+    res.render('logout'); 
+});
+router.post('/logout', (req, res) => {
+    req.session.destroy(err => {
+        if (err) {
+            return res.redirect('/error'); 
+        }
+        res.redirect('/index.html'); 
+    });
 });
 
 module.exports = router;
