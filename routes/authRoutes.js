@@ -91,12 +91,15 @@ router.get('/upload', isAuthenticated, (req,res)=>{
     res.render('upload');
 })
 router.post('/upload', async (req, res) => {
-    const { projectName, projectDescription, githubLink } = req.body;
+    const { whatsappLink,fullName,email,projectName, projectDescription, githubLink } = req.body;
     try {
         const response = await db.collection('projects').add({
             projectName,
             projectDescription,
             githubLink,
+            fullName,
+            email,
+            whatsappLink,
             createdAt: new Date()
         });
         if (response) res.redirect('/projects');

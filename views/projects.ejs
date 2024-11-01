@@ -34,7 +34,7 @@
 
         .ag-courses_item {
             flex: 1 1 calc(33.333% - 20px); 
-            height: 300px; 
+            height: auto; 
             background-color: #fff;
             border-radius: 10px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); 
@@ -42,6 +42,7 @@
             overflow: hidden;
             position: relative;
             text-align: center; 
+            padding: 20px; /* Added padding for better spacing */
         }
 
         .ag-courses_item:hover {
@@ -53,7 +54,6 @@
 
         .ag-courses-item_link {
             display: block;
-            padding: 20px;
             text-decoration: none;
             color: inherit; 
         }
@@ -145,6 +145,11 @@
                             </div>
                             <div class="ag-courses-item_date-box">
                                 <p><%= project.projectDescription %></p>
+                                <p><strong>Contributor:</strong> <%= project.fullName %></p>
+                                <p><strong>Email:</strong> <%= project.email %></p>
+                                <% if (project.whatsappLink) { %>
+                                    <p><strong>WhatsApp:</strong> <a href="<%= project.whatsappLink %>" style="color: inherit;">Chat</a></p>
+                                <% } %>
                             </div>
                         </a>
                     </div>

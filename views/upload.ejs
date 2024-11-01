@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Upload Project</title>
     <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
             display: flex;
             justify-content: center;
@@ -12,43 +18,52 @@
             height: 100vh;
             margin: 0;
             font-family: Arial, sans-serif;
-            background-color: #f0f8ff; 
+            background-color: #f0f8ff;
+            overflow: hidden; /* Prevents horizontal and vertical scrolling */
         }
 
         .upload-container {
-            width: 400px;
-            padding: 30px;
-            background-color: #ffffff; 
+            width: 90%;
+            max-width: 400px;
+            padding: 20px;
+            background-color: #ffffff;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
             text-align: center;
+            max-height: 90vh;
+            overflow-y: auto; /* Enables scrolling vertically if content exceeds container height */
         }
 
         h2 {
-            color: #007bff; 
-            margin-bottom: 20px;
+            color: #007bff;
+            margin-bottom: 15px;
+            font-size: 1.5em;
         }
 
         label {
             display: block;
-            margin: 15px 0 5px;
+            margin: 10px 0 5px;
             color: #333;
             text-align: left;
+            font-size: 0.9em;
         }
 
         input[type="text"],
         input[type="url"],
+        input[type="email"],
         textarea {
             width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
+            padding: 8px;
+            margin-bottom: 10px;
             border: 1px solid #ddd;
             border-radius: 5px;
-            font-size: 16px;
+            font-size: 0.9em;
+            box-sizing: border-box;
         }
 
         input[type="text"]:focus,
         input[type="url"]:focus,
+        input[type="email"]:focus,
         textarea:focus {
             border-color: #007bff;
             outline: none;
@@ -57,25 +72,25 @@
 
         button {
             width: 100%;
-            padding: 12px;
-            background-color: #007bff; 
+            padding: 10px;
+            background-color: #007bff;
             color: white;
-            font-size: 16px;
+            font-size: 1em;
             font-weight: bold;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s ease;
-            margin-top: 10px; 
+            margin-top: 8px;
         }
 
         button:hover {
-            background-color: #0056b3; 
+            background-color: #0056b3;
         }
 
         .back-button {
-            margin-top: 15px; 
-            background-color: #6c757d; 
+            margin-top: 10px;
+            background-color: #6c757d;
         }
 
         .back-button:hover {
@@ -87,14 +102,23 @@
     <div class="upload-container">
         <h2>Upload New Project</h2>
         <form action="/upload" method="POST">
+            <label for="fullName">Full Name:</label>
+            <input type="text" id="fullName" name="fullName" required>
+
+            <label for="email">Gmail:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="whatsappLink">WhatsApp Chat Link (optional):</label>
+            <input type="url" id="whatsappLink" name="whatsappLink">
+
             <label for="projectName">Project Name:</label>
             <input type="text" id="projectName" name="projectName" required>
 
             <label for="projectDescription">Project Description:</label>
-            <textarea id="projectDescription" name="projectDescription" rows="4" required></textarea>
+            <textarea id="projectDescription" name="projectDescription" rows="3" required></textarea>
 
             <label for="githubLink">GitHub Repository Link:</label>
-            <input type="url" id="githubLink" name="githubLink" placeholder="https://github.com/username/repo" required>
+            <input type="url" id="githubLink" name="githubLink" required>
 
             <button type="submit">Upload Project</button>
         </form>
