@@ -6,7 +6,296 @@
   <title>Open Source UVCE</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+  <link rel="icon" href="/assets/img/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet">
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+    integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
   <link rel="stylesheet" href="./styles.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+    * {
+      padding: 0;
+      margin: 0;
+      text-decoration: none;
+      list-style: none;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Montserrat", sans-serif;
+    }
+
+    nav {
+      background: #0082e6;
+      height: 80px;
+      width: 100%;
+    }
+
+    label.logo {
+      color: white;
+      font-size: 25px;
+      line-height: 80px;
+      padding: 0 100px;
+      font-weight: bold;
+    }
+
+    nav ul {
+      float: right;
+      margin-right: 20px;
+    }
+
+    nav ul li {
+      display: inline-block;
+      line-height: 80px;
+      margin: 0 5px;
+    }
+
+    nav ul li a,
+    nav ul li button {
+      color: white;
+      font-size: 17px;
+      padding: 7px 13px;
+      border-radius: 3px;
+      text-transform: uppercase;
+      border: none;
+      background: transparent; 
+      cursor: pointer; 
+    }
+
+    a.active,
+    a:hover,
+    nav ul li button:hover {
+      background: #1b9bff;
+      transition: .5s;
+    }
+
+    .checkbtn {
+      font-size: 22px;
+      color: white;
+      float: right;
+      line-height: 80px;
+      margin-right: 30px;
+      cursor: pointer;
+      display: none;
+    }
+
+    #check {
+      display: none;
+    }
+
+    @media (max-width: 1050px) {
+      label.logo {
+        padding-left: 30px;
+      }
+
+      nav ul li a {
+        font-size: 16px;
+      }
+    }
+
+    @media (max-width: 890px) {
+      .checkbtn {
+        display: block;
+      }
+
+      label.logo {
+        font-size: 22px;
+      }
+
+      ul {
+        position: fixed;
+        width: 100%;
+        height: 100vh;
+        background: #2c3e50;
+        top: 80px;
+        left: -100%;
+        text-align: center;
+        transition: all .5s;
+      }
+
+      nav ul li {
+        display: block;
+        margin: 50px 0;
+        line-height: 30px;
+      }
+
+      nav ul li a {
+        font-size: 20px;
+      }
+
+      a:hover,
+      a.active {
+        background: none;
+        color: #0082e6;
+      }
+
+      #check:checked~ul {
+        left: 0;
+      }
+    }
+
+    /* landing page css */
+    .landing-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100vw;
+      height: 400px;
+    }
+
+    .main-heading {
+      font-size: 2.5em;
+      color: #333;
+    }
+
+    .sub-heading {
+      font-size: 1.5em;
+      color: #555;
+      margin-top: 10px;
+    }
+
+    .description {
+      font-size: 1em;
+      color: #666;
+      margin-top: 10px;
+      line-height: 1.5;
+    }
+
+    .get-started-button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 1em;
+      color: #fff;
+      background-color: #007bff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .get-started-button:hover {
+      background-color: #0056b3;
+    }
+
+    /* footer css starts here */
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+    body {
+      line-height: 1.5;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    .container {
+      max-width: 1170px;
+      margin: auto;
+    }
+
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    .footer {
+      background-color: #24262b;
+      padding: 70px 0;
+    }
+
+    .footer-col {
+      width: 25%;
+      padding: 0 15px;
+    }
+
+    .footer-col h4 {
+      font-size: 18px;
+      color: #ffffff;
+      text-transform: capitalize;
+      margin-bottom: 35px;
+      font-weight: 500;
+      position: relative;
+    }
+
+    .footer-col h4::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -10px;
+      background-color: #e91e63;
+      height: 2px;
+      box-sizing: border-box;
+      width: 50px;
+    }
+
+    .footer-col ul li:not(:last-child) {
+      margin-bottom: 10px;
+    }
+
+    .footer-col ul li a {
+      font-size: 16px;
+      text-transform: capitalize;
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: 300;
+      color: #bbbbbb;
+      display: block;
+      transition: all 0.3s ease;
+    }
+
+    .footer-col ul li a:hover {
+      color: #ffffff;
+      padding-left: 8px;
+    }
+
+    .footer-col .social-links a {
+      display: inline-block;
+      height: 40px;
+      width: 40px;
+      background-color: rgba(255, 255, 255, 0.2);
+      margin: 0 10px 10px 0;
+      text-align: center;
+      line-height: 40px;
+      border-radius: 50%;
+      color: #ffffff;
+      transition: all 0.5s ease;
+    }
+
+    .footer-col .social-links a:hover {
+      color: #24262b;
+      background-color: #ffffff;
+    }
+
+    @media (max-width: 767px) {
+      .footer-col {
+        width: 50%;
+        margin-bottom: 30px;
+      }
+    }
+
+    @media (max-width: 574px) {
+      .footer-col {
+        width: 100%;
+      }
+    }
+  </style>
 </head>
 
 <body>
@@ -26,58 +315,170 @@
       <li><a href="/login">Login</a></li>
     </ul>
   </nav>
-
   
+
+
   <div class="landing-container">
     <h1 class="main-heading">Open Source UVCE</h1>
     <h2 class="sub-heading">Connecting Ideas!</h2>
-    <p class="description">Have and idea? Want a team as passionate as you? Hop on!</p>
+    <p class="description">Have an idea? Want a team as passionate as you? Hop on!</p>
     <button class="get-started-button">Get Started</button>
   </div>
 
-  <footer class="footer">
-    <div class="container">
-        <div class="row">
-            <div class="footer-col">
-                <h4>company</h4>
-                <ul>
-                    <li><a href="#">about us</a></li>
-                    <li><a href="#">our services</a></li>
-                    <li><a href="#">privacy policy</a></li>
-                    <li><a href="#">affiliate program</a></li>
-                </ul>
+<!-- about us -->
+<section class="about-us-section">
+  <div class="about-us-container">
+    <h3>About Us</h3>
+    <p>We are a team of passionate developers dedicated to creating impactful open-source solutions that foster collaboration and innovation. Our mission is to empower individuals around the world to contribute to open-source projects, build their skills, and make meaningful contributions to the tech community.</p>
+    <div class="about-us-features">
+      <div class="feature">
+        <h3>Our Mission</h3>
+        <p>To support and inspire a global community of developers to contribute to open-source software, building a more accessible and inclusive tech environment.</p>
+      </div>
+      <div class="feature">
+        <h3>Our Vision</h3>
+        <p>We envision a world where anyone with a passion for technology can make a difference, improve their skills, and contribute to projects that impact millions.</p>
+      </div>
+      <div class="feature">
+        <h3>Our Values</h3>
+        <p>Collaboration, inclusivity, transparency, and continuous learning are at the heart of everything we do.</p>
+      </div>
+    </div>
+  </div>
+</section><br><br>
+
+<!-- about us ends here -->
+  <!-- services cards -->
+   <center><h2 class="services-head">SERVICES</h2></center>
+<div class="card-container">
+  <div class="card">
+    <div class="card-content">
+      <p><center>Guided Contribution Pathways</center><br>
+        <i>Get step-by-step guidance on contributing to open-source projects, from beginner-friendly tasks to advanced challenges.</i></p>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-content">
+      <p><center>Community Collaboration</center><br>
+        <i>Join a thriving community of developers, designers, and contributors working together to build impactful software.</i></p>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-content">
+      <p><center>Project Matching & Support</center><br>
+        <i>Find projects that align with your skills and interests, and receive support every step of the way.</i></p>
+    </div>
+  </div>
+</div><br><br>
+  <!-- services cards ends -->
+  <!-- faq section starts here -->
+  <section>
+    <div class="wrapper" id="faqs">
+        <h3>Frequently Asked Questions</h3>
+    
+        <div class="faq">
+            <button class="accordion">
+              Why should I contribute to open-source projects?
+                <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="panel">
+                <p>
+                  Contributing to open-source projects helps you improve your coding skills, collaborate with a global community, build your professional portfolio, and give back to the tech community. It’s also a great way to gain real-world experience.
+                </p>
             </div>
-            <div class="footer-col">
-                <h4>get help</h4>
-                <ul>
-                    <li><a href="#">FAQ</a></li>
-                    <li><a href="#">shipping</a></li>
-                    <li><a href="#">returns</a></li>
-                    <li><a href="#">order status</a></li>
-                    <li><a href="#">payment options</a></li>
-                </ul>
+        </div>
+    
+        <div class="faq">
+            <button class="accordion">
+              Do I need to be an experienced developer to contribute?
+                <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="panel">
+                <p>
+                  No, open-source projects welcome contributions from all skill levels. There are many ways to contribute, from writing code to updating documentation, designing, testing, or even reporting bugs.
+                </p>
             </div>
-            <div class="footer-col">
-                <h4>online shop</h4>
-                <ul>
-                    <li><a href="#">watch</a></li>
-                    <li><a href="#">bag</a></li>
-                    <li><a href="#">shoes</a></li>
-                    <li><a href="#">dress</a></li>
-                </ul>
+        </div>
+    
+        <div class="faq">
+            <button class="accordion">
+    
+              What tools do I need to get started with open-source contributions?
+    
+                <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="panel">
+                <p>
+                  Basic tools include a code editor (like VS Code), Git for version control, and a GitHub or GitLab account. Familiarity with the command line can also be helpful.
+                </p>
             </div>
-            <div class="footer-col">
-                <h4>follow us</h4>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                </div>
+        </div>
+    
+        <div class="faq">
+            <button class="accordion">
+                What is the domain for presentation?
+                <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="panel">
+                <p>
+                    There is no specific domain for presentation; the goal is to come up with ideas for the betterment of society.
+                </p>
+            </div>
+        </div>
+    
+        <div class="faq">
+            <button class="accordion">
+    
+              How do I submit a contribution?
+    
+                <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="panel">
+                <p>
+    
+                  To contribute, first fork the repository to your account, make the changes in your fork, and then create a Pull Request (PR) to propose your changes to the original project. The project maintainers will review your PR and provide feedback.
+    
+                </p>
+            </div>
+        </div>
+    
+        <div class="faq">
+            <button class="accordion">
+              Can I contribute to multiple projects?
+                <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="panel">
+                <p>
+                  Absolutely! Many contributors work on several open-source projects to broaden their skills and experience. It’s a great way to build a diverse portfolio and explore different technologies.
+                </p>
             </div>
         </div>
     </div>
+    </section><br><br><br>
+<!-- faq section ends here     -->
+
+<footer>
+  <div class="footerContainer" id="footersec">
+      <div class="socialIcons">
+          <a href="https://www.facebook.com/ieeeuvce/"><i class="fa-brands fa-facebook"></i></a>
+          <a href="https://www.instagram.com/ieeeuvce/?hl=en"><i class="fa-brands fa-instagram"></i></a>
+          <a href="https://www.youtube.com/channel/UCt9I0q7BzuuRBcJKvMcdpow"><i class="fa-brands fa-youtube"></i></a>
+      </div>
+      <div class="footerNav">
+          <ul><li><a href="#landing">Home</a></li>
+              <li><a href="#about">About</a></li>
+              <li><a href="#explore">Services</a></li>
+              <li><a href="#faqs">FAQ</a></li>
+              <li><a href="#footersec">Contact</a></li>
+          </ul>
+      </div>
+      
+  </div>
+  <div class="footerBottom">
+      <p>Copyright &copy;2024; Designed by <span class="designer">Shreya Nayak B</span></p>
+  </div>
 </footer>
+  <script src="./script.js"></script>
 </body>
 
 </html>
